@@ -1,4 +1,3 @@
-import httpStatus from "http-status";
 import type { NextFunction, Request, Response } from "express";
 import { jwtUtils } from "../utilities/jwt";
 import type { JwtPayload } from "jsonwebtoken";
@@ -9,11 +8,7 @@ import envConfigs from "../configs/env-configs";
 
 export const auth = (...requiredRoles: Role[]) => {
 	return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-		const token = req.cookies.access_token
-			? req.cookies.access_token
-			: req.headers.authorization?.startsWith("Bearer ")
-				? req.headers.authorization?.split(" ")[1]
-				: req.headers.authorization;
+		const token = req.headers.authorization;
 
 		if (!token) {
 			throw new Error("You are not logged in. Please log in to access this resource.");

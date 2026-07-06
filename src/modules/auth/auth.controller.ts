@@ -60,8 +60,21 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+const getMyProfile = catchAsync(async (req: Request, res: Response) => {
+	const userID = req.user?.id as string;
+	const userData = await authServices.getMyProfileFromDB(userID);
+
+	sendResponse(res, {
+		success: true,
+		message: "Profile retrieved successfully.",
+		statusCode: httpStatus.OK,
+		data: userData,
+	});
+});
+
 export const authControllers = {
 	register,
 	login,
 	refreshToken,
+	getMyProfile,
 };
