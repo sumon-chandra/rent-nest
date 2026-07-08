@@ -1,3 +1,4 @@
+import { Role } from "../../../generated/prisma/enums";
 import { prisma } from "../../lib/prisma";
 import AppError from "../../utilities/app-error";
 import { RentalRequestData } from "./rental-request.interface";
@@ -89,7 +90,9 @@ const getRentalRequestById = async (id: string) => {
 const updateRentalRequest = async (id: string, rentalRequestData: Partial<RentalRequestData>) => {
 	const rentalRequest = await prisma.rentalRequest.update({
 		where: { id },
-		data: rentalRequestData,
+		data: {
+			status: rentalRequestData.status,
+		},
 	});
 	if (!rentalRequest) {
 		throw AppError.notFound("Rental request not found");

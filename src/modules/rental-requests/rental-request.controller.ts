@@ -2,6 +2,7 @@ import httpStatus from "http-status";
 import { catchAsync } from "../../utilities/catch-async";
 import { sendResponse } from "../../utilities/send-response";
 import { rentalRequestService } from "./rental-request.service";
+import { Role } from "../../../generated/prisma/enums";
 
 const makeRentalRequest = catchAsync(async (req, res) => {
 	const rentalRequestData = req.body;
@@ -42,7 +43,8 @@ const getRentalRequestById = catchAsync(async (req, res) => {
 const updateRentalRequest = catchAsync(async (req, res) => {
 	const { id } = req.params;
 	const rentalRequestData = req.body;
-	const rentalRequest = await rentalRequestService.updateRentalRequest(id, rentalRequestData);
+	const tenantId = req.user?.id;
+	const rentalRequest = await rentalRequestService.updateRentalRequest(id, { ...rentalRequestData, tenantId });
 	sendResponse(res, {
 		success: true,
 		statusCode: httpStatus.OK,
