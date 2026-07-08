@@ -33,7 +33,27 @@ const createRentalRequest = async (rentalRequestData: RentalRequestData) => {
 };
 
 const getAllRentalRequests = async () => {
-	const rentalRequests = await prisma.rentalRequest.findMany();
+	const rentalRequests = await prisma.rentalRequest.findMany({
+		include: {
+			tenant: {
+				select: {
+					name: true,
+					email: true,
+					phone: true,
+					avatar: true,
+					status: true,
+				},
+			},
+			property: {
+				select: {
+					title: true,
+					description: true,
+					price: true,
+					status: true,
+				},
+			},
+		},
+	});
 	return rentalRequests;
 };
 
