@@ -1,6 +1,7 @@
 import { Review } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 import AppError from "../../utilities/app-error";
+import { ReviewDto } from "./review.interface";
 
 const addReview = async ({ tenantId, propertyId, comment, rating }: Review) => {
 	if (!rating || isNaN(Number(rating))) {
@@ -47,8 +48,23 @@ const deleteReview = async (reviewId: string) => {
 	await prisma.review.delete({ where: { id: reviewId } });
 };
 
+const updateReview = async (payload: ReviewDto) => {
+	const response = await prisma.review.update({
+		where: { id: payload.reviewId },
+		data: {
+			comment: payload.comment,
+		},
+		omit: {
+			createdAt: true,
+			updatedAt: true,
+		},
+	});
+	return response;
+};
+
 export const reviewServices = {
 	addReview,
 	getPropertyReviews,
 	deleteReview,
+	updateReview,
 };

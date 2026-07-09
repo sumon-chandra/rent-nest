@@ -7,6 +7,7 @@ const reviewRouter = Router();
 
 reviewRouter.get("/properties/:propertyId", reviewControllers.propertyReviews);
 reviewRouter.post("/", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), reviewControllers.addReview);
-reviewRouter.post("/:reviewId", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), reviewControllers.deleteReview);
+reviewRouter.patch("/:reviewId", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), reviewControllers.updateReview);
+reviewRouter.delete("/:reviewId", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), reviewControllers.deleteReview);
 
 export default reviewRouter;

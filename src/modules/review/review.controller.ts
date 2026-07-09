@@ -17,6 +17,19 @@ const addReview = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+const updateReview = catchAsync(async (req: Request, res: Response) => {
+	const reviewId = req.params.reviewId as string;
+	const payload = { ...req.body, reviewId };
+	const response = await reviewServices.updateReview(payload);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "Review updated.",
+		data: response,
+	});
+});
+
 const propertyReviews = catchAsync(async (req: Request, res: Response) => {
 	const propertyId = req.params.propertyId as string;
 	const response = await reviewServices.getPropertyReviews(propertyId);
@@ -45,4 +58,5 @@ export const reviewControllers = {
 	addReview,
 	propertyReviews,
 	deleteReview,
+	updateReview,
 };
