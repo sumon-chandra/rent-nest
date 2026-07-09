@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import globalErrorHandler from "./middlewares/global-error-handler.js";
 import mainRouter from "./routes/index.js";
+import { notFound } from "./middlewares/not-found.js";
 
 const app = express();
 app.post("/api/v1/payments/webhook", express.raw({ type: "application/json" }));
@@ -15,5 +16,6 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api/v1/", mainRouter);
 app.use(globalErrorHandler);
+app.use(notFound);
 
 export default app;

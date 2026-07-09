@@ -4,6 +4,7 @@ import categoryRouter from "../modules/category/category.route";
 import propertyRouter from "../modules/property/property.route";
 import rentalReqRouter from "../modules/rental-requests/rental-request.route";
 import paymentRouter from "../modules/payment/payment.router";
+import reviewRouter from "../modules/review/review.router";
 
 const mainRouter = Router();
 
@@ -27,6 +28,10 @@ const moduleRoutes = [
 	{
 		path: "/payments",
 		route: paymentRouter,
+	},
+	{
+		path: "/reviews",
+		route: reviewRouter,
 	},
 ];
 
