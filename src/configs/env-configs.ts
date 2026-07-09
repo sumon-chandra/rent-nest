@@ -15,6 +15,10 @@ const envConfigs = {
 		access_expired_in: process.env.ACCESS_TOKEN_EXPIRED_IN as string,
 		refresh_expired_in: process.env.REFRESH_TOKEN_EXPIRED_IN as string,
 	},
+	stripe: {
+		secret_key: process.env.STRIPE_SECRET_KEY as string,
+		webhook_secret: process.env.STRIPE_WEBHOOK_SECRET as string,
+	},
 };
 
 export default envConfigs;

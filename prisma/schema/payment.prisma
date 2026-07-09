@@ -1,0 +1,16 @@
+model Payment {
+   id              String          @id @default(cuid())
+   transactionId   String          @unique
+   rentalRequestId String          @unique
+   rentalRequest   RentalRequest   @relation(fields: [rentalRequestId], references: [id], onDelete: Cascade)
+   amount          Decimal         @db.Decimal(10, 2)
+   provider        PaymentProvider
+   status          PaymentStatus   @default(PENDING)
+   currency        String          @default("BDT")
+   paidAt          DateTime?
+   createdAt       DateTime        @default(now())
+   updatedAt       DateTime        @updatedAt
+
+   @@index([status])
+   @@index([provider])
+}
