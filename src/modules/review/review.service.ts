@@ -7,7 +7,7 @@ const addReview = async ({ tenantId, propertyId, comment, rating }: Review) => {
 	if (!rating || isNaN(Number(rating))) {
 		throw AppError.badRequest("Rating is required.");
 	}
-	const calculateRating = Number(rating) > 5 ? 5 : Number(rating);
+	const calculateRating = Math.min(Number(rating), 5);
 	const isReviewExists = await prisma.review.findFirst({
 		where: {
 			tenantId,
