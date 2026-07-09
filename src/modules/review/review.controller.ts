@@ -43,8 +43,8 @@ const propertyReviews = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteReview = catchAsync(async (req: Request, res: Response) => {
-	const propertyId = req.params.propertyId as string;
-	await reviewServices.deleteReview(propertyId);
+	const reviewId = req.params.reviewId as string;
+	await reviewServices.deleteReview(reviewId);
 
 	sendResponse(res, {
 		success: true,
