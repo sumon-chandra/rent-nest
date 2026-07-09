@@ -37,14 +37,6 @@ Built with **Express.js**, **Bun**, **TypeScript**, **Prisma ORM**, and **Postgr
 - View rental requests
 - Approve or reject rental requests
 
-### Admin
-
-- View all users
-- Ban or unban users
-- Manage categories
-- View all properties
-- View all rental requests
-- Moderate platform activity
 
 ---
 
@@ -59,8 +51,7 @@ Built with **Express.js**, **Bun**, **TypeScript**, **Prisma ORM**, and **Postgr
 | PostgreSQL          | Relational Database                  |
 | JWT                 | Authentication                       |
 | bcrypt              | Password Hashing                     |
-| Zod                 | Request Validation                   |
-| Stripe / SSLCommerz | Payment Gateway                      |
+| Stripe | Payment Gateway                      |
 
 ---
 
