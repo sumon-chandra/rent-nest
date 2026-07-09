@@ -3,7 +3,7 @@ import globalErrorHandler from "./middlewares/global-error-handler.js";
 import mainRouter from "./routes/index.js";
 
 const app = express();
-
+app.post("/api/v1/payments/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {

@@ -4,14 +4,14 @@ import envConfigs from "../../configs/env-configs";
 import { prisma } from "../../lib/prisma";
 import { stripe } from "../../lib/stripe";
 import AppError from "../../utilities/app-error";
+import Stripe from "stripe";
+import { paymentUtils } from "./payment.utils";
 
 const createCheckoutSession = async (tenantId: string, rentalId: string) => {
 	const response = await prisma.$transaction(async (tx) => {
 		const rental = await tx.rentalRequest.findUnique({
 			where: {
 				id: rentalId,
-				// tenantId: tenantId,
-				// status: RentalRequestStatus.APPROVED,
 			},
 			include: {
 				property: true,
@@ -81,6 +81,34 @@ const createCheckoutSession = async (tenantId: string, rentalId: string) => {
 	return response;
 };
 
+const handleStripeWebhook = async (payload: Buffer, signature: string) => {
+	if (!signature) {
+		throw new Error("Missing Stripe Signature");
+	}
+
+	const endpointSecret = envConfigs.stripe.webhook_secret;
+	const eventPayload = new Uint8Array(payload);
+	const event = stripe.webhooks.constructEvent(eventPayload, signature, endpointSecret);
+
+	switch (event.type) {
+		case "checkout.session.completed":
+			await paymentUtils.handleCheckoutCompleted(event.data.object as Stripe.Checkout.Session);
+			break;
+
+		case "checkout.session.expired":
+			await paymentUtils.handleCheckoutExpired(event.data.object as Stripe.Checkout.Session);
+			break;
+
+		case "payment_intent.payment_failed":
+			await paymentUtils.handlePaymentFailed(event.data.object as Stripe.PaymentIntent);
+			break;
+		default:
+			console.log(`Unhandled Event: ${event.type}`);
+			break;
+	}
+};
+
 export const paymentServices = {
 	createCheckoutSession,
+	handleStripeWebhook,
 };

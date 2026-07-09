@@ -17,6 +17,21 @@ const createCheckoutSession = catchAsync(async (req: Request, res: Response) => 
 	});
 });
 
+const stripeWebhook = catchAsync(async (req: Request, res: Response) => {
+	const event = req.body as Buffer;
+	const signature = req.headers["stripe-signature"] as string;
+
+	await paymentServices.handleStripeWebhook(event, signature);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "Stripe webhook triggered.",
+		data: null,
+	});
+});
+
 export const paymentControllers = {
 	createCheckoutSession,
+	stripeWebhook,
 };
