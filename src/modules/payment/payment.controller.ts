@@ -31,7 +31,32 @@ const stripeWebhook = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+const paymentList = catchAsync(async (req: Request, res: Response) => {
+	const payments = await paymentServices.getAllPayments();
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "Successfully get payment list.",
+		data: payments,
+	});
+});
+
+const paymentDetails = catchAsync(async (req: Request, res: Response) => {
+	const paymentId = req.params.paymentId as string;
+	const payment = await paymentServices.getPaymentById(paymentId);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "Successfully get payment details.",
+		data: payment,
+	});
+});
+
 export const paymentControllers = {
 	createCheckoutSession,
 	stripeWebhook,
+	paymentList,
+	paymentDetails,
 };

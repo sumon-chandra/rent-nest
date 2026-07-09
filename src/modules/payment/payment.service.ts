@@ -108,7 +108,25 @@ const handleStripeWebhook = async (payload: Buffer, signature: string) => {
 	}
 };
 
+const getAllPayments = async () => {
+	const response = await prisma.payment.findMany();
+	if (!response) {
+		throw AppError.internal("Failed to retrieve payment list.");
+	}
+	return response;
+};
+
+const getPaymentById = async (paymentId: string) => {
+	const response = await prisma.payment.findUniqueOrThrow({
+		where: { id: paymentId },
+	});
+
+	return response;
+};
+
 export const paymentServices = {
 	createCheckoutSession,
 	handleStripeWebhook,
+	getAllPayments,
+	getPaymentById,
 };
