@@ -7,6 +7,7 @@ export type ErrorCode =
 	| "UNAUTHORIZED"
 	| "FORBIDDEN"
 	| "EMAIL_CONFLICT"
+	| "CONFLICT"
 	| "AUTH_FAILED"
 	| "INTERNAL_ERROR";
 
@@ -57,7 +58,7 @@ class AppError extends Error {
 		return new AppError({ statusCode: status.FORBIDDEN, message, code: "FORBIDDEN" });
 	}
 
-	static conflict(message: string, code: "EMAIL_CONFLICT") {
+	static conflict(message: string, code: ErrorCode) {
 		return new AppError({ statusCode: status.CONFLICT, message, code });
 	}
 

@@ -1,4 +1,5 @@
-import { PaymentProvider, RentalRequestStatus } from "../../../generated/prisma/enums";
+import httpStatus from "http-status";
+import { PaymentProvider } from "../../../generated/prisma/enums";
 import envConfigs from "../../configs/env-configs";
 import { prisma } from "../../lib/prisma";
 import { stripe } from "../../lib/stripe";
@@ -9,8 +10,8 @@ const createCheckoutSession = async (tenantId: string, rentalId: string) => {
 		const rental = await tx.rentalRequest.findUnique({
 			where: {
 				id: rentalId,
-				tenantId: tenantId,
-				status: RentalRequestStatus.PENDING,
+				// tenantId: tenantId,
+				// status: RentalRequestStatus.APPROVED,
 			},
 			include: {
 				property: true,
@@ -20,6 +21,13 @@ const createCheckoutSession = async (tenantId: string, rentalId: string) => {
 		if (!rental) {
 			throw AppError.notFound("No pending rental request found.");
 		}
+		if (rental.tenant.id !== tenantId) {
+			throw AppError.conflict("You only make payment in your own rental requests.", "CONFLICT");
+		}
+		if (rental.status !== "APPROVED") {
+			throw AppError.conflict("Your rental request is not in approved mode.", "CONFLICT");
+		}
+
 		const customer = await stripe.customers.create({
 			email: rental.tenant.email,
 			name: rental.tenant.name,
