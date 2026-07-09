@@ -53,6 +53,12 @@ const userLogin = async ({ email, password }: LoginDto) => {
 		where: { email },
 	});
 
+	const validPassword = await bcrypt.compare(password, existingUser.password);
+
+	if (!validPassword) {
+		throw AppError.conflict("Email or Password does not match.", "EMAIL_CONFLICT");
+	}
+
 	const jwtPayload = {
 		id: existingUser.id,
 		email: existingUser.email,
