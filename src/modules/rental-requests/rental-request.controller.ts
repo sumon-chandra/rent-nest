@@ -18,9 +18,9 @@ const makeRentalRequest = catchAsync(async (req, res) => {
 });
 
 const getAllRentalRequests = catchAsync(async (req, res) => {
-	const role = req.user?.role as Role;
+	const userRole = req.user?.role as Role;
 	const userId = req.user?.id as string;
-	const rentalRequests = await rentalRequestService.getAllRentalRequests(role, userId);
+	const rentalRequests = await rentalRequestService.getAllRentalRequests(userRole, userId);
 
 	sendResponse(res, {
 		success: true,

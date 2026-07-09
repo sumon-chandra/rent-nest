@@ -35,6 +35,7 @@ const createRentalRequest = async (rentalRequestData: RentalRequestData) => {
 };
 
 const getAllRentalRequests = async (requestedUserRole: Role, userId: string) => {
+	console.log({ requestedUserRole, userId });
 	let where: RentalRequestWhereInput = {};
 	if (requestedUserRole === Role.LANDLORD) {
 		where = { property: { landlordId: userId } };
@@ -49,10 +50,11 @@ const getAllRentalRequests = async (requestedUserRole: Role, userId: string) => 
 		include: {
 			tenant: {
 				select: {
-					updatedAt: false,
-					createdAt: false,
-					role: false,
-					password: false,
+					id: true,
+					name: true,
+					email: true,
+					avatar: true,
+					phone: true,
 				},
 			},
 			property: {
@@ -74,10 +76,11 @@ const getRentalRequestById = async (id: string) => {
 		include: {
 			tenant: {
 				select: {
-					updatedAt: false,
-					createdAt: false,
-					role: false,
-					password: false,
+					id: true,
+					name: true,
+					email: true,
+					avatar: true,
+					phone: true,
 				},
 			},
 			property: {
