@@ -1,4 +1,5 @@
 import { Role } from "../../../generated/prisma/enums";
+import { RentalRequestWhereInput } from "../../../generated/prisma/models";
 import { prisma } from "../../lib/prisma";
 import AppError from "../../utilities/app-error";
 import { RentalRequestData } from "./rental-request.interface";
@@ -33,16 +34,25 @@ const createRentalRequest = async (rentalRequestData: RentalRequestData) => {
 	return rentalRequest;
 };
 
-const getAllRentalRequests = async () => {
+const getAllRentalRequests = async (requestedUserRole: Role, userId: string) => {
+	let where: RentalRequestWhereInput = {};
+	if (requestedUserRole === Role.LANDLORD) {
+		where = { property: { landlordId: userId } };
+	} else if (requestedUserRole === Role.TENANT) {
+		where = { tenantId: userId };
+	} else {
+		where = {};
+	}
+
 	const rentalRequests = await prisma.rentalRequest.findMany({
+		where,
 		include: {
 			tenant: {
 				select: {
-					name: true,
-					email: true,
-					phone: true,
-					avatar: true,
-					status: true,
+					updatedAt: false,
+					createdAt: false,
+					role: false,
+					password: false,
 				},
 			},
 			property: {
@@ -64,11 +74,10 @@ const getRentalRequestById = async (id: string) => {
 		include: {
 			tenant: {
 				select: {
-					name: true,
-					email: true,
-					phone: true,
-					avatar: true,
-					status: true,
+					updatedAt: false,
+					createdAt: false,
+					role: false,
+					password: false,
 				},
 			},
 			property: {
