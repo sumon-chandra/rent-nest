@@ -9,7 +9,7 @@ const register = catchAsync(async (req: Request, res: Response) => {
 
 	sendResponse(res, {
 		success: true,
-		message: "User login successfully.",
+		message: "User successfully registered.",
 		statusCode: httpStatus.OK,
 		data: response,
 	});
