@@ -19,6 +19,7 @@ const envConfigs = {
 		secret_key: process.env.STRIPE_SECRET_KEY as string,
 		webhook_secret: process.env.STRIPE_WEBHOOK_SECRET as string,
 	},
+	node_env: process.env.NODE_ENV as string,
 };
 
 export default envConfigs;
