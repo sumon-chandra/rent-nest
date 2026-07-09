@@ -64,49 +64,18 @@ Built with **Express.js**, **Bun**, **TypeScript**, **Prisma ORM**, and **Postgr
 
 ---
 
-# Project Structure
-
-```text
-src/
-│
-├── app.ts
-├── server.ts
-│
-├── config/
-├── middlewares/
-├── utils/
-├── helpers/
-├── constants/
-├── lib/
-│
-├── routes/
-│
-├── modules/
-│   ├── auth/
-│   ├── category/
-│   ├── property/
-│   ├── rental/
-│   ├── payment/
-│   ├── review/
-│   └── admin/
-│
-└── prisma/
-```
-
----
-
 # Installation
 
 Clone the repository.
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/sumon-chandra/rent-nest.git
 ```
 
 Navigate to the project.
 
 ```bash
-cd rentnest-api
+cd rent-nest
 ```
 
 Install dependencies.
@@ -124,37 +93,34 @@ Create a `.env` file in the project root.
 ```env
 PORT=5000
 
-DATABASE_URL=
+APP_URL=http://localhost:3000
 
-JWT_ACCESS_SECRET=
+DATABASE_URL=YOUR_DATABASE_URL
+
+JWT_ACCESS_SECRET=YOUR_SECRET
+JWT_REFRESH_SECRET=YOUR_SECRET
 JWT_ACCESS_EXPIRES_IN=7d
-
-JWT_REFRESH_SECRET=
 JWT_REFRESH_EXPIRES_IN=30d
 
-BCRYPT_SALT_ROUNDS=10
+STRIPE_SECRET_KEY=YOUR_SECRET_KEY
+STRIPE_WEBHOOK_SECRET=YOUR_WEBHOOK_SECRET
 
-STRIPE_SECRET_KEY=
-
-SSLCOMMERZ_STORE_ID=
-SSLCOMMERZ_STORE_PASSWORD=
-SSLCOMMERZ_IS_LIVE=false
 ```
 
 ---
 
 # Database
 
-Generate Prisma Client.
-
-```bash
-bunx prisma generate
-```
-
 Run migrations.
 
 ```bash
 bunx prisma migrate dev
+```
+
+Generate Prisma Client.
+
+```bash
+bunx prisma generate
 ```
 
 Open Prisma Studio.
@@ -173,12 +139,6 @@ Development
 bun run dev
 ```
 
-Production
-
-```bash
-bun run start
-```
-
 ---
 
 # API Modules
@@ -189,96 +149,69 @@ bun run start
 - Rental Requests
 - Payments
 - Reviews
-- Administration
-
----
-
-# Authentication
-
-Authentication is handled using JWT.
-
-Protected routes require:
-
-```http
-Authorization: Bearer <access_token>
-```
 
 ---
 
 # API Endpoints
 
+#### Main API Route https://rentnestapi4.vercel.app/api/v1/
+
 ## Authentication
 
-| Method | Endpoint             |
-| ------ | -------------------- |
-| POST   | `/api/auth/register` |
-| POST   | `/api/auth/login`    |
-| GET    | `/api/auth/me`       |
-
----
+| Method | Endpoint         | Description                    |
+| ------ | ---------------- | ------------------------------ |
+| POST   | `/auth/register` | Register tenant or landlord    |
+| POST   | `/auth/login`    | Login and receive JWT          |
+| GET    | `/auth/me`       | Get current authenticated user |
 
 ## Categories
 
-| Method | Endpoint              |
-| ------ | --------------------- |
-| POST   | `/api/categories`     |
-| GET    | `/api/categories`     |
-| GET    | `/api/categories/:id` |
-| PATCH  | `/api/categories/:id` |
-| DELETE | `/api/categories/:id` |
-
----
+| Method | Endpoint                  | Description             |
+| ------ | ------------------------- | ----------------------- |
+| POST   | `/categories`             | Create category (Admin) |
+| GET    | `/categories`             | Get all categories      |
+| GET    | `/categories/:categoryId` | Get category by ID      |
+| PATCH  | `/categories/:categoryId` | Update category         |
+| DELETE | `/categories/:categoryId` | Delete category         |
 
 ## Properties
 
-| Method | Endpoint              |
-| ------ | --------------------- |
-| POST   | `/api/properties`     |
-| GET    | `/api/properties`     |
-| GET    | `/api/properties/:id` |
-| PATCH  | `/api/properties/:id` |
-| DELETE | `/api/properties/:id` |
-
----
+| Method | Endpoint                  | Description                                              |
+| ------ | ------------------------- | -------------------------------------------------------- |
+| POST   | `/properties`             | Create property (Landlord)                               |
+| GET    | `/properties`             | List properties (supports search/filter/sort/pagination) |
+| GET    | `/properties/:propertyId` | Get property details                                     |
+| PATCH  | `/properties/:propertyId` | Update property                                          |
+| DELETE | `/properties/:propertyId` | Delete property                                          |
 
 ## Rental Requests
 
-| Method | Endpoint           |
-| ------ | ------------------ |
-| POST   | `/api/rentals`     |
-| GET    | `/api/rentals`     |
-| GET    | `/api/rentals/:id` |
-| PATCH  | `/api/rentals/:id` |
-
----
+| Method | Endpoint                     | Description                               |
+| ------ | ---------------------------- | ----------------------------------------- |
+| POST   | `/rental-requests`           | Submit rental request                     |
+| GET    | `/rental-requests`           | Get current user's rental requests        |
+| GET    | `/rental-requests/:rentalId` | Get rental request details                |
+| PATCH  | `/rental-requests/:rentalId` | Approve, reject, or cancel rental request |
+| DELETE | `/rental-requests/:rentalId` | Delete rental request                     |
 
 ## Payments
 
-| Method | Endpoint                |
-| ------ | ----------------------- |
-| POST   | `/api/payments/create`  |
-| POST   | `/api/payments/confirm` |
-| GET    | `/api/payments`         |
-| GET    | `/api/payments/:id`     |
+| Method | Endpoint               | Description                    |
+| ------ | ---------------------- | ------------------------------ |
+| POST   | `/payments/checkout`   | Create Stripe Checkout Session |
+| POST   | `/payments/webhook`    | Stripe webhook                 |
+| GET    | `/payments`            | Payment history                |
+| GET    | `/payments/:paymentId` | Payment details                |
 
 ---
 
 ## Reviews
 
-| Method | Endpoint       |
-| ------ | -------------- |
-| POST   | `/api/reviews` |
-
----
-
-## Admin
-
-| Method | Endpoint                |
-| ------ | ----------------------- |
-| GET    | `/api/admin/users`      |
-| PATCH  | `/api/admin/users/:id`  |
-| GET    | `/api/admin/properties` |
-| GET    | `/api/admin/rentals`    |
+| Method | Endpoint                          | Description                 |
+| ------ | --------------------------------- | --------------------------- |
+| POST   | `/reviews`                        | Create review               |
+| GET    | `/properties/:propertyId/reviews` | Get reviews for a property  |
+| DELETE | `/reviews/:propertyId`            | Delete review (Admin/Owner) |
 
 ---
 
@@ -289,19 +222,6 @@ Authorization: Bearer <access_token>
 | Tenant   | Browse properties, request rentals, make payments, leave reviews |
 | Landlord | Manage properties and rental requests                            |
 | Admin    | Manage users, categories, properties, and rental requests        |
-
----
-
-# Request Validation
-
-Incoming requests are validated before reaching controllers using schema-based validation.
-
-Validation includes:
-
-- Required fields
-- Data types
-- Business rules
-- Custom validation messages
 
 ---
 
@@ -326,6 +246,7 @@ Example:
 ```json
 {
 	"success": true,
+	"statusCode": 200,
 	"message": "Property created successfully",
 	"data": {}
 }
