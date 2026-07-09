@@ -1,0 +1,851 @@
+{
+  "info": {
+    "_postman_id": "f4e011f7-e952-4db5-9243-dd4b47c7d572",
+    "name": "Rent Nest Copy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46036130"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Kanchan Das\",\r\n    \"email\": \"kanchan@gmail.com\",\r\n    \"password\": \"kanchan\",\r\n    \"role\": \"TENANT\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnestapi2.vercel.app/api/v1/auth/register",
+              "protocol": "https",
+              "host": [
+                "rentnestapi2",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "// {\r\n//     \"email\": \"topu@gmail.com\",\r\n//     \"password\": \"topu\"\r\n// }\r\n\r\n// {\r\n//     \"email\": \"tenant@gmail.com\",\r\n//     \"password\": \"tenant\"\r\n// }\r\n\r\n{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"admin@gmail.com\"\r\n}\r\n\r\n// {\r\n//     \"email\": \"kanchan@gmail.com\",\r\n//     \"password\": \"kanchan\"\r\n// }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnestapi2.vercel.app/api/v1/auth/login",
+              "protocol": "https",
+              "host": [
+                "rentnestapi2",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "My profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcmQ3dGx6NDAwMDAwNGwxcnh2NTFmd2oiLCJlbWFpbCI6ImthbmNoYW5AZ21haWwuY29tIiwicm9sZSI6IlRFTkFOVCIsImlhdCI6MTc4MzU4NDM2MCwiZXhwIjoxNzgzNjcwNzYwfQ.4sR0unCfghf53yN_5Cf6pStmGopPEwF0TeOhHWSROzw",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://rentnestapi2.vercel.app/api/v1/auth/me",
+              "protocol": "https",
+              "host": [
+                "rentnestapi2",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Category Copy",
+      "item": [
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzM2MzMzMSwiZXhwIjoxNzgzNDQ5NzMxfQ.pe6fJqMae1K7zRLHekEdNsyul3miOcmUKTipleJ_nzk",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Shop\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rent-nest-psi.vercel.app/api/v1/categories",
+              "protocol": "https",
+              "host": [
+                "rent-nest-psi",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Category",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzM2MzMzMSwiZXhwIjoxNzgzNDQ5NzMxfQ.pe6fJqMae1K7zRLHekEdNsyul3miOcmUKTipleJ_nzk",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/categories/c3fda5c9-406c-493c-91c9-3d5875c1d138",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "c3fda5c9-406c-493c-91c9-3d5875c1d138"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzM2MzMzMSwiZXhwIjoxNzgzNDQ5NzMxfQ.pe6fJqMae1K7zRLHekEdNsyul3miOcmUKTipleJ_nzk",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Room New\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/categories/c3fda5c9-406c-493c-91c9-3d5875c1d138",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "c3fda5c9-406c-493c-91c9-3d5875c1d138"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzM2MzMzMSwiZXhwIjoxNzgzNDQ5NzMxfQ.pe6fJqMae1K7zRLHekEdNsyul3miOcmUKTipleJ_nzk",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/categories/c3fda5c9-406c-493c-91c9-3d5875c1d138",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "c3fda5c9-406c-493c-91c9-3d5875c1d138"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzM2MzMzMSwiZXhwIjoxNzgzNDQ5NzMxfQ.pe6fJqMae1K7zRLHekEdNsyul3miOcmUKTipleJ_nzk",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Property",
+      "item": [
+        {
+          "name": "Create Property",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzM2MzMzMSwiZXhwIjoxNzgzNDQ5NzMxfQ.pe6fJqMae1K7zRLHekEdNsyul3miOcmUKTipleJ_nzk",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Shop\"\r\n}"
+            },
+            "url": {
+              "raw": "https://rent-nest-psi.vercel.app/api/v1/properties",
+              "protocol": "https",
+              "host": [
+                "rent-nest-psi",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "properties"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "All Properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://rent-nest-api.vercel.app/api/v1/properties?availability=AVAILABLE&minPrice=35000",
+              "protocol": "https",
+              "host": [
+                "rent-nest-api",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "properties"
+              ],
+              "query": [
+                {
+                  "key": "availability",
+                  "value": "AVAILABLE"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "35000"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcmQ3dGx6NDAwMDAwNGwxcnh2NTFmd2oiLCJlbWFpbCI6ImthbmNoYW5AZ21haWwuY29tIiwicm9sZSI6IlRFTkFOVCIsImlhdCI6MTc4MzU4NDM2MCwiZXhwIjoxNzgzNjcwNzYwfQ.4sR0unCfghf53yN_5Cf6pStmGopPEwF0TeOhHWSROzw",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/properties/28324a83-3646-4695-8d48-590bae856f4d",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "properties",
+                "28324a83-3646-4695-8d48-590bae856f4d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Property",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzYwNDczNiwiZXhwIjoxNzgzNjkxMTM2fQ.LSPGg_UPIziUTUiEWjvJJLIe4wEOLszpQ6cheWM5ZKo",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": \"Townhouse with Garden Updated\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/properties/28324a83-3646-4695-8d48-590bae856f4d",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "properties",
+                "28324a83-3646-4695-8d48-590bae856f4d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Property",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzYwNDczNiwiZXhwIjoxNzgzNjkxMTM2fQ.LSPGg_UPIziUTUiEWjvJJLIe4wEOLszpQ6cheWM5ZKo",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/properties/f9671650-1e02-4913-8515-a3d88c7efb7a",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "properties",
+                "f9671650-1e02-4913-8515-a3d88c7efb7a"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Rental Request",
+      "item": [
+        {
+          "name": "Make Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcmQ3dGx6NDAwMDAwNGwxcnh2NTFmd2oiLCJlbWFpbCI6ImthbmNoYW5AZ21haWwuY29tIiwicm9sZSI6IlRFTkFOVCIsImlhdCI6MTc4MzU4NDM2MCwiZXhwIjoxNzgzNjcwNzYwfQ.4sR0unCfghf53yN_5Cf6pStmGopPEwF0TeOhHWSROzw",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"propertyId\": \"28324a83-3646-4695-8d48-590bae856f4d\",\r\n    \"message\": \"Is there townhouse available?\",\r\n    \"moveInDate\": \"2026-09-10\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnestapi3.vercel.app/api/v1/rental-requests",
+              "protocol": "https",
+              "host": [
+                "rentnestapi3",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rental-requests"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Requests",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcmQ3dGx6NDAwMDAwNGwxcnh2NTFmd2oiLCJlbWFpbCI6ImthbmNoYW5AZ21haWwuY29tIiwicm9sZSI6IlRFTkFOVCIsImlhdCI6MTc4MzU4NDM2MCwiZXhwIjoxNzgzNjcwNzYwfQ.4sR0unCfghf53yN_5Cf6pStmGopPEwF0TeOhHWSROzw",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://rentnestapi3.vercel.app/api/v1/rental-requests",
+              "protocol": "https",
+              "host": [
+                "rentnestapi3",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rental-requests"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get request by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcmQ3dGx6NDAwMDAwNGwxcnh2NTFmd2oiLCJlbWFpbCI6ImthbmNoYW5AZ21haWwuY29tIiwicm9sZSI6IlRFTkFOVCIsImlhdCI6MTc4MzU4NDM2MCwiZXhwIjoxNzgzNjcwNzYwfQ.4sR0unCfghf53yN_5Cf6pStmGopPEwF0TeOhHWSROzw",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://rentnestapi2.vercel.app/api/v1/rental-requests/a54d18d8-a069-4f4d-a12a-760813245113",
+              "protocol": "https",
+              "host": [
+                "rentnestapi2",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rental-requests",
+                "a54d18d8-a069-4f4d-a12a-760813245113"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Rental Request",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzYwNDczNiwiZXhwIjoxNzgzNjkxMTM2fQ.LSPGg_UPIziUTUiEWjvJJLIe4wEOLszpQ6cheWM5ZKo",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"message\": \"Updated message for I'd like to book the luxury family apartment.\",\r\n    \"status\": \"APPROVED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/rental-requests/0359c9dc-6489-4381-be12-c6b2b37e4e74",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rental-requests",
+                "0359c9dc-6489-4381-be12-c6b2b37e4e74"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Rental Request",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzYwNDczNiwiZXhwIjoxNzgzNjkxMTM2fQ.LSPGg_UPIziUTUiEWjvJJLIe4wEOLszpQ6cheWM5ZKo",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"message\": \"Updated message for I'd like to book the luxury family apartment.\",\r\n    \"status\": \"APPROVED\"\r\n}"
+            },
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/rental-requests/0359c9dc-6489-4381-be12-c6b2b37e4e74",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "rental-requests",
+                "0359c9dc-6489-4381-be12-c6b2b37e4e74"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Payment",
+      "item": [
+        {
+          "name": "Create Checkout Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcmQ3dGx6NDAwMDAwNGwxcnh2NTFmd2oiLCJlbWFpbCI6ImthbmNoYW5AZ21haWwuY29tIiwicm9sZSI6IlRFTkFOVCIsImlhdCI6MTc4MzU4NDM2MCwiZXhwIjoxNzgzNjcwNzYwfQ.4sR0unCfghf53yN_5Cf6pStmGopPEwF0TeOhHWSROzw",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/payments/checkout/fc2f0e9f-72d6-444e-8486-de05b221b4c3",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "checkout",
+                "fc2f0e9f-72d6-444e-8486-de05b221b4c3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Payment List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzYwNzA0OSwiZXhwIjoxNzgzNjkzNDQ5fQ.jdXf043B2fqpkYgfIJ9wJp42JyOebavYaunPjWJc4Rw",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/payments",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Payment Details by ID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzYwNDczNiwiZXhwIjoxNzgzNjkxMTM2fQ.LSPGg_UPIziUTUiEWjvJJLIe4wEOLszpQ6cheWM5ZKo",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"message\": \"Updated message for I'd like to book the luxury family apartment.\",\r\n    \"status\": \"APPROVED\"\r\n}"
+            },
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/payments/cmrdaebhn000004lejiq6ruzd",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "cmrdaebhn000004lejiq6ruzd"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Review",
+      "item": [
+        {
+          "name": "Add Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzYwNDczNiwiZXhwIjoxNzgzNjkxMTM2fQ.LSPGg_UPIziUTUiEWjvJJLIe4wEOLszpQ6cheWM5ZKo",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"propertyId\": \"af901773-b6d2-4f2e-8f0d-b59d8bde981c\",\r\n    \"comment\": \"Parking could be improved. Nice Location\",\r\n    \"rating\": 4.5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/reviews",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Property Reviews",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzYwNDczNiwiZXhwIjoxNzgzNjkxMTM2fQ.LSPGg_UPIziUTUiEWjvJJLIe4wEOLszpQ6cheWM5ZKo",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"propertyId\": \"ec37b349-e184-49b1-adc0-a0f6d644bda2\",\r\n    \"comment\": \"Nice location and clean apartment. Parking could be improved.\",\r\n    \"rating\": 4.5\r\n}"
+            },
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/reviews/property/f7bb72e2-8743-4d79-9f36-635788a360ce",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "property",
+                "f7bb72e2-8743-4d79-9f36-635788a360ce"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Review",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzYwNDczNiwiZXhwIjoxNzgzNjkxMTM2fQ.LSPGg_UPIziUTUiEWjvJJLIe4wEOLszpQ6cheWM5ZKo",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"comment\": \"Wow.. This is nice.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/reviews/cmrdgii5r00028s8zdi4ema3g",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "cmrdgii5r00028s8zdi4ema3g"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Review",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNtcjlrZXNrazAwMDAwNGp5czZmazZwbTEiLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc4MzYwNDczNiwiZXhwIjoxNzgzNjkxMTM2fQ.LSPGg_UPIziUTUiEWjvJJLIe4wEOLszpQ6cheWM5ZKo",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://rentnestapi4.vercel.app/api/v1/reviews/cmrdgii5r00028s8zdi4ema3g",
+              "protocol": "https",
+              "host": [
+                "rentnestapi4",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "reviews",
+                "cmrdgii5r00028s8zdi4ema3g"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
