@@ -180,9 +180,9 @@ bun run dev
 | ------ | ------------------------------------------ | ----------------------------------------- |
 | POST   | `/rental-requests`                         | Submit rental request                     |
 | GET    | `/rental-requests`                         | Get current user's rental requests        |
-| GET    | `/rental-requests/:rentalId`               | Get rental request details                |
-| PATCH  | `/rental-requests/update-status/:rentalId` | Approve, reject, or cancel rental request |
-| DELETE | `/rental-requests/:rentalId`               | Delete rental request                     |
+| GET    | `/rental-requests/:id`               | Get rental request details                |
+| PATCH  | `/rental-requests/update-status/:id` | Approve, reject, or cancel rental request |
+| DELETE | `/rental-requests/:id`               | Delete rental request                     |
 
 ## Payments
 
