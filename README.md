@@ -37,21 +37,20 @@ Built with **Express.js**, **Bun**, **TypeScript**, **Prisma ORM**, and **Postgr
 - View rental requests
 - Approve or reject rental requests
 
-
 ---
 
 # Tech Stack
 
-| Technology          | Purpose                              |
-| ------------------- | ------------------------------------ |
-| Bun                 | JavaScript Runtime & Package Manager |
-| Express.js          | Backend Framework                    |
-| TypeScript          | Static Typing                        |
-| Prisma ORM          | Database ORM                         |
-| PostgreSQL          | Relational Database                  |
-| JWT                 | Authentication                       |
-| bcrypt              | Password Hashing                     |
-| Stripe | Payment Gateway                      |
+| Technology | Purpose                              |
+| ---------- | ------------------------------------ |
+| Bun        | JavaScript Runtime & Package Manager |
+| Express.js | Backend Framework                    |
+| TypeScript | Static Typing                        |
+| Prisma ORM | Database ORM                         |
+| PostgreSQL | Relational Database                  |
+| JWT        | Authentication                       |
+| bcrypt     | Password Hashing                     |
+| Stripe     | Payment Gateway                      |
 
 ---
 
@@ -177,13 +176,13 @@ bun run dev
 
 ## Rental Requests
 
-| Method | Endpoint                     | Description                               |
-| ------ | ---------------------------- | ----------------------------------------- |
-| POST   | `/rental-requests`           | Submit rental request                     |
-| GET    | `/rental-requests`           | Get current user's rental requests        |
-| GET    | `/rental-requests/:rentalId` | Get rental request details                |
-| PATCH  | `/rental-requests/:rentalId` | Approve, reject, or cancel rental request |
-| DELETE | `/rental-requests/:rentalId` | Delete rental request                     |
+| Method | Endpoint                                   | Description                               |
+| ------ | ------------------------------------------ | ----------------------------------------- |
+| POST   | `/rental-requests`                         | Submit rental request                     |
+| GET    | `/rental-requests`                         | Get current user's rental requests        |
+| GET    | `/rental-requests/:rentalId`               | Get rental request details                |
+| PATCH  | `/rental-requests/update-status/:rentalId` | Approve, reject, or cancel rental request |
+| DELETE | `/rental-requests/:rentalId`               | Delete rental request                     |
 
 ## Payments
 
@@ -203,6 +202,18 @@ bun run dev
 | POST   | `/reviews`                        | Create review               |
 | GET    | `/properties/:propertyId/reviews` | Get reviews for a property  |
 | DELETE | `/reviews/:propertyId`            | Delete review (Admin/Owner) |
+
+---
+
+## Users
+
+| Method | Endpoint         | Description                           |
+| ------ | ---------------- | ------------------------------------- |
+| GET    | `/users`         | Get all users (Admin)                 |
+| GET    | `/users/:userId` | Get user by ID (Admin)                |
+| GET    | `/users/me`      | Get user authenticated user's profile |
+| PATCH  | `/users/update`  | Update user's profile                 |
+| DELETE | `/users/:userId` | Delete user's profile                 |
 
 ---
 
