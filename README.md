@@ -144,7 +144,7 @@ bun run dev
 
 # API Endpoints
 
-#### Main API Route https://rentnestapi4.vercel.app/api/v1/
+#### Main API Route https://rentnestapi2.vercel.app/api/v1/
 
 ## Authentication
 
