@@ -29,9 +29,8 @@ const insertUserDataIntoDb = async (dto: Partial<User>) => {
 		select: {
 			name: true,
 			email: true,
+			password: true,
 			role: true,
-			avatar: true,
-			phone: true,
 		},
 	});
 	if (!user) {
