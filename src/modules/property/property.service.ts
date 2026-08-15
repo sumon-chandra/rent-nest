@@ -40,7 +40,7 @@ const insertProperty = async (dto: Partial<Property>): Promise<Property> => {
 	return newProperty;
 };
 
-const getAllProperties = async (query: PropertyQuery): Promise<Property[]> => {
+const getAllProperties = async (query: PropertyQuery) => {
 	const limit = query.limit ? Number(query.limit) : 10;
 	const page = query.page ? Number(query.page) : 1;
 	const skip = (page - 1) * limit;
@@ -125,13 +125,73 @@ const getAllProperties = async (query: PropertyQuery): Promise<Property[]> => {
 		orderBy: {
 			[sortby]: sortOrder,
 		},
+		include: {
+			category: {
+				select: {
+					name: true,
+					id: true,
+				},
+			},
+			landlord: {
+				select: {
+					name: true,
+					id: true,
+					email: true,
+					avatar: true,
+				},
+			},
+			_count: {
+				select: {
+					reviews: true,
+					favoriteProperties: true,
+				},
+			},
+		},
 	});
 	return properties;
 };
 
-const getPropertyById = async (id: string): Promise<Property | null> => {
+const getPropertyById = async (id: string) => {
 	const property = await prisma.property.findUnique({
 		where: { id },
+		include: {
+			category: {
+				select: {
+					name: true,
+					id: true,
+				},
+			},
+			landlord: {
+				select: {
+					name: true,
+					id: true,
+					email: true,
+					avatar: true,
+				},
+			},
+			reviews: {
+				select: {
+					id: true,
+					comment: true,
+					rating: true,
+					createdAt: true,
+					tenant: {
+						select: {
+							name: true,
+							id: true,
+							email: true,
+							avatar: true,
+						},
+					},
+				},
+			},
+			_count: {
+				select: {
+					reviews: true,
+					favoriteProperties: true,
+				},
+			},
+		},
 	});
 	return property;
 };
