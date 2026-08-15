@@ -29,6 +29,11 @@ const insertProperty = async (dto: Partial<Property>): Promise<Property> => {
 			categoryId: dto.categoryId,
 			location: dto.location,
 			landlordId: dto.landlordId,
+			amenities: dto.amenities,
+			rating: dto.rating,
+			isFeatured: dto.isFeatured,
+			status: dto.status,
+			images: dto.images,
 		},
 	});
 	return newProperty;
