@@ -34,6 +34,7 @@ const insertProperty = async (dto: Partial<Property>): Promise<Property> => {
 			isFeatured: dto.isFeatured,
 			status: dto.status,
 			images: dto.images,
+			thumbnail: dto.thumbnail,
 		},
 	});
 	return newProperty;
