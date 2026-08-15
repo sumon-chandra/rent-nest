@@ -6,6 +6,7 @@ import { propertyController } from "./property.controller";
 const propertyRouter = Router();
 
 propertyRouter.get("/", propertyController.getAllProperties);
+propertyRouter.get("/metadata", propertyController.getPropertyMetadata);
 propertyRouter.get("/:id", propertyController.getPropertyById);
 propertyRouter.post("/", auth(Role.ADMIN, Role.LANDLORD), propertyController.createProperty);
 propertyRouter.patch("/:id", auth(Role.ADMIN, Role.LANDLORD), propertyController.updateProperty);

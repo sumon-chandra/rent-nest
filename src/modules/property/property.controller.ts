@@ -16,12 +16,13 @@ const createProperty = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllProperties = catchAsync(async (req: Request, res: Response) => {
-	const properties = await propertyService.getAllProperties(req.query);
+	const result = await propertyService.getAllProperties(req.query);
 	sendResponse(res, {
 		success: true,
 		statusCode: httpStatus.OK,
 		message: "Properties retrieved successfully",
-		data: properties,
+		meta: result.meta,
+		data: result.data,
 	});
 });
 
@@ -58,10 +59,22 @@ const deleteProperty = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+const getPropertyMetadata = catchAsync(async (req: Request, res: Response) => {
+	const metadata = await propertyService.getPropertyMetadata();
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "Property metadata retrieved successfully",
+		data: metadata,
+	});
+});
+
 export const propertyController = {
 	createProperty,
 	getAllProperties,
 	getPropertyById,
 	updateProperty,
 	deleteProperty,
+	getPropertyMetadata,
 };

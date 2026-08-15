@@ -148,7 +148,23 @@ const getAllProperties = async (query: PropertyQuery) => {
 			},
 		},
 	});
-	return properties;
+	const total = await prisma.property.count({
+		where: {
+			AND: andConditions,
+		},
+	});
+
+	const metadata = await getPropertyMetadata();
+
+	return {
+		meta: {
+			page,
+			limit,
+			total,
+			...metadata,
+		},
+		data: properties,
+	};
 };
 
 const getPropertyById = async (id: string) => {
@@ -211,10 +227,54 @@ const deleteProperty = async (id: string): Promise<Property> => {
 	return deletedProperty;
 };
 
+const getPropertyMetadata = async () => {
+	const totalProperties = await prisma.property.count();
+	
+	const aggregate = await prisma.property.aggregate({
+		_min: { price: true },
+		_max: { price: true },
+	});
+
+	const mostReviewed = await prisma.property.findFirst({
+		orderBy: {
+			reviews: {
+				_count: "desc",
+			},
+		},
+		include: {
+			_count: {
+				select: { reviews: true, favoriteProperties: true },
+			},
+		},
+	});
+
+	const mostFavorites = await prisma.property.findFirst({
+		orderBy: {
+			favoriteProperties: {
+				_count: "desc",
+			},
+		},
+		include: {
+			_count: {
+				select: { reviews: true, favoriteProperties: true },
+			},
+		},
+	});
+
+	return {
+		totalProperties,
+		minPrice: aggregate._min.price,
+		maxPrice: aggregate._max.price,
+		mostReviewed,
+		mostFavorites,
+	};
+};
+
 export const propertyService = {
 	insertProperty,
 	getAllProperties,
 	getPropertyById,
 	updateProperty,
 	deleteProperty,
+	getPropertyMetadata,
 };
