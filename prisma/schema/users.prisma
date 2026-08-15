@@ -16,9 +16,10 @@ model User {
 
    // Relations
 
-   properties     Property[]
-   rentalRequests RentalRequest[]
-   reviews        Review[]
+   properties         Property[]
+   rentalRequests     RentalRequest[]
+   reviews            Review[]
+   favoriteProperties FavoriteProperties[]
 
    @@map("users")
 }

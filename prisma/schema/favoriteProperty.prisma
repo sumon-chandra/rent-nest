@@ -1,0 +1,11 @@
+model FavoriteProperties {
+   id         String   @id @default(uuid())
+   tenantId   String
+   propertyId String
+   tenant     User     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+   property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+   @@index([tenantId])
+   @@index([propertyId])
+   @@map("favorite_property")
+}
