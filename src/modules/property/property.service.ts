@@ -270,6 +270,38 @@ const getPropertyMetadata = async () => {
 	};
 };
 
+const getLandlordProperties = async (landlordId: string) => {
+	if (!landlordId) {
+		throw AppError.badRequest("Landlord not found");
+	}
+	const properties = await prisma.property.findMany({
+		where: { landlordId },
+		include: {
+			category: {
+				select: {
+					name: true,
+					id: true,
+				},
+			},
+			landlord: {
+				select: {
+					name: true,
+					id: true,
+					email: true,
+					avatar: true,
+				},
+			},
+			_count: {
+				select: {
+					reviews: true,
+					favoriteProperties: true,
+				},
+			},
+		},
+	});
+	return properties;
+};
+
 export const propertyService = {
 	insertProperty,
 	getAllProperties,
@@ -277,4 +309,5 @@ export const propertyService = {
 	updateProperty,
 	deleteProperty,
 	getPropertyMetadata,
+	getLandlordProperties,
 };

@@ -70,6 +70,19 @@ const getPropertyMetadata = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+const getLandlordProperties = catchAsync(async (req: Request, res: Response) => {
+	const landlordId = req.user?.id;
+
+	const properties = await propertyService.getLandlordProperties(landlordId!);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "Landlord properties retrieved successfully",
+		data: properties,
+	});
+});
+
 export const propertyController = {
 	createProperty,
 	getAllProperties,
@@ -77,4 +90,5 @@ export const propertyController = {
 	updateProperty,
 	deleteProperty,
 	getPropertyMetadata,
+	getLandlordProperties,
 };
