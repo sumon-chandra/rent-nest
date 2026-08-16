@@ -1,9 +1,11 @@
 import express, { Request, Response } from "express";
+import cors from "cors";
 import globalErrorHandler from "./middlewares/global-error-handler.js";
 import mainRouter from "./routes/index.js";
 import { notFound } from "./middlewares/not-found.js";
 
 const app = express();
+app.use(cors({ origin: ["http://localhost:3000", "https://rent-opennest.vercel.app"], credentials: true }));
 app.post("/api/v1/payments/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 
