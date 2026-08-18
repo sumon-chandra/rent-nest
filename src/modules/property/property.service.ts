@@ -295,11 +295,45 @@ const getLandlordProperties = async (landlordId: string) => {
 				select: {
 					reviews: true,
 					favoriteProperties: true,
+					rentalRequests: {
+						where: {
+							status: {
+								in: ["APPROVED", "COMPLETED"],
+							},
+						},
+					},
+				},
+			},
+			rentalRequests: {
+				select: {
+					payment: {
+						select: {
+							amount: true,
+							status: true,
+						},
+					},
 				},
 			},
 		},
 	});
-	return properties;
+
+	const formattedProperties = properties.map((property) => {
+		const revenue = property.rentalRequests.reduce((sum, request) => {
+			if (request.payment?.status === "COMPLETED") {
+				return sum + Number(request.payment.amount || 0);
+			}
+			return sum;
+		}, 0);
+
+		const { rentalRequests, ...rest } = property;
+
+		return {
+			...rest,
+			revenue,
+		};
+	});
+
+	return formattedProperties;
 };
 
 export const propertyService = {
