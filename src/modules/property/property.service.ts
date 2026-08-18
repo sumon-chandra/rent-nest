@@ -306,6 +306,8 @@ const getLandlordProperties = async (landlordId: string) => {
 			},
 			rentalRequests: {
 				select: {
+					createdAt: true,
+					status: true,
 					payment: {
 						select: {
 							amount: true,
@@ -317,13 +319,35 @@ const getLandlordProperties = async (landlordId: string) => {
 		},
 	});
 
+	let totalRevenue = 0;
+	let activeProperties = 0;
+	let totalBookingsThisMonth = 0;
+
+	const currentMonth = new Date().getMonth();
+	const currentYear = new Date().getFullYear();
+
 	const formattedProperties = properties.map((property) => {
+		if (property.status === "AVAILABLE" || property.status === "RENTED") {
+			activeProperties += 1;
+		}
+
 		const revenue = property.rentalRequests.reduce((sum, request) => {
+			// Check if booking is this month
+			if (
+				(request.status === "APPROVED" || request.status === "COMPLETED") &&
+				request.createdAt.getMonth() === currentMonth &&
+				request.createdAt.getFullYear() === currentYear
+			) {
+				totalBookingsThisMonth += 1;
+			}
+
 			if (request.payment?.status === "COMPLETED") {
 				return sum + Number(request.payment.amount || 0);
 			}
 			return sum;
 		}, 0);
+
+		totalRevenue += revenue;
 
 		const { rentalRequests, ...rest } = property;
 
@@ -333,7 +357,14 @@ const getLandlordProperties = async (landlordId: string) => {
 		};
 	});
 
-	return formattedProperties;
+	return {
+		data: formattedProperties,
+		meta: {
+			totalRevenue,
+			activeProperties,
+			totalBookingsThisMonth,
+		},
+	};
 };
 
 export const propertyService = {
