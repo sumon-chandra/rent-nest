@@ -124,9 +124,33 @@ const getPaymentById = async (paymentId: string) => {
 	return response;
 };
 
+const getMyPayments = async (tenantId: string) => {
+	const response = await prisma.payment.findMany({
+		where: {
+			rentalRequest: {
+				tenantId,
+			},
+		},
+		include: {
+			rentalRequest: {
+				include: {
+					property: {
+						select: {
+							title: true,
+							location: true,
+						}
+					}
+				}
+			}
+		}
+	});
+	return response;
+};
+
 export const paymentServices = {
 	createCheckoutSession,
 	handleStripeWebhook,
 	getAllPayments,
 	getPaymentById,
+	getMyPayments,
 };

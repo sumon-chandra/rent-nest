@@ -118,10 +118,33 @@ const deleteRentalRequest = async (id: string) => {
 	});
 };
 
+const getMyProperties = async (tenantId: string) => {
+	const rentalRequests = await prisma.rentalRequest.findMany({
+		where: { tenantId },
+		include: {
+			property: {
+				include: {
+					landlord: true,
+				},
+			},
+		},
+	});
+
+	return rentalRequests.map((request) => ({
+		id: request.id,
+		property: request.property.title,
+		landlord: request.property.landlord.name,
+		dateApplied: request.createdAt.toISOString().split("T")[0],
+		status: request.status,
+		moveInDate: request.moveInDate.toISOString().split("T")[0],
+	}));
+};
+
 export const rentalRequestService = {
 	createRentalRequest,
 	getAllRentalRequests,
 	getRentalRequestById,
 	updateRentalRequest,
 	deleteRentalRequest,
+	getMyProperties,
 };

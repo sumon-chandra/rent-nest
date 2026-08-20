@@ -84,6 +84,44 @@ const getLandlordProperties = catchAsync(async (req: Request, res: Response) => 
 	});
 });
 
+const addFavorite = catchAsync(async (req: Request, res: Response) => {
+	const tenantId = req.user?.id as string;
+	const { propertyId } = req.body;
+	const favorite = await propertyService.addFavorite(tenantId, propertyId);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.CREATED,
+		message: "Property added to favorites.",
+		data: favorite,
+	});
+});
+
+const getFavorites = catchAsync(async (req: Request, res: Response) => {
+	const tenantId = req.user?.id as string;
+	const favorites = await propertyService.getFavoriteProperties(tenantId);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "Favorite properties retrieved successfully.",
+		data: favorites,
+	});
+});
+
+const removeFavorite = catchAsync(async (req: Request, res: Response) => {
+	const tenantId = req.user?.id as string;
+	const { id } = req.params;
+	await propertyService.removeFavorite(tenantId, id);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "Property removed from favorites.",
+		data: null,
+	});
+});
+
 export const propertyController = {
 	createProperty,
 	getAllProperties,
@@ -92,4 +130,7 @@ export const propertyController = {
 	deleteProperty,
 	getPropertyMetadata,
 	getLandlordProperties,
+	addFavorite,
+	getFavorites,
+	removeFavorite,
 };

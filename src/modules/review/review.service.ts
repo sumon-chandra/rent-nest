@@ -62,9 +62,27 @@ const updateReview = async (payload: ReviewDto) => {
 	return response;
 };
 
+const getMyReviews = async (tenantId: string) => {
+	const response = await prisma.review.findMany({
+		where: {
+			tenantId,
+		},
+		include: {
+			property: {
+				select: {
+					title: true,
+					location: true,
+				}
+			}
+		}
+	});
+	return response;
+};
+
 export const reviewServices = {
 	addReview,
 	getPropertyReviews,
 	deleteReview,
 	updateReview,
+	getMyReviews,
 };

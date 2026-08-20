@@ -66,10 +66,22 @@ const deleteRentalRequest = catchAsync(async (req, res) => {
 	});
 });
 
+const getMyProperties = catchAsync(async (req, res) => {
+	const tenantId = req.user?.id as string;
+	const requests = await rentalRequestService.getMyProperties(tenantId);
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "My rental requests retrieved successfully",
+		data: requests,
+	});
+});
+
 export const rentalRequestController = {
 	makeRentalRequest,
 	getAllRentalRequests,
 	getRentalRequestById,
 	updateRentalRequest,
 	deleteRentalRequest,
+	getMyProperties,
 };

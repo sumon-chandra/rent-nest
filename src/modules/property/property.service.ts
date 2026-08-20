@@ -407,6 +407,52 @@ const getLandlordProperties = async (landlordId: string) => {
 	};
 };
 
+const addFavorite = async (tenantId: string, propertyId: string) => {
+	const isExists = await prisma.favoriteProperties.findFirst({
+		where: {
+			tenantId,
+			propertyId,
+		},
+	});
+	if (isExists) {
+		throw AppError.badRequest("Property is already in your favorites.");
+	}
+	const favorite = await prisma.favoriteProperties.create({
+		data: {
+			tenantId,
+			propertyId,
+		},
+	});
+	return favorite;
+};
+
+const getFavoriteProperties = async (tenantId: string) => {
+	const favorites = await prisma.favoriteProperties.findMany({
+		where: {
+			tenantId,
+		},
+		include: {
+			property: true,
+		},
+	});
+	return favorites
+};
+
+const removeFavorite = async (tenantId: string, favoriteId: string) => {
+	const favorite = await prisma.favoriteProperties.findUnique({
+		where: { id: favoriteId },
+	});
+	if (!favorite) {
+		throw AppError.notFound("Favorite property not found.");
+	}
+	if (favorite.tenantId !== tenantId) {
+		throw AppError.badRequest("You are not authorized to remove this favorite.");
+	}
+	await prisma.favoriteProperties.delete({
+		where: { id: favoriteId },
+	});
+};
+
 export const propertyService = {
 	insertProperty,
 	getAllProperties,
@@ -415,4 +461,7 @@ export const propertyService = {
 	deleteProperty,
 	getPropertyMetadata,
 	getLandlordProperties,
+	addFavorite,
+	getFavoriteProperties,
+	removeFavorite,
 };

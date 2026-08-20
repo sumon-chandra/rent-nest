@@ -6,6 +6,7 @@ import { Role } from "../../../generated/prisma/enums";
 const reviewRouter = Router();
 
 reviewRouter.get("/property/:propertyId", reviewControllers.propertyReviews);
+reviewRouter.get("/my-reviews", auth(Role.TENANT), reviewControllers.getMyReviews);
 reviewRouter.post("/", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), reviewControllers.addReview);
 reviewRouter.patch("/:reviewId", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), reviewControllers.updateReview);
 reviewRouter.delete("/:reviewId", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), reviewControllers.deleteReview);

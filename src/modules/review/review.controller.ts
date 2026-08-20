@@ -54,9 +54,21 @@ const deleteReview = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+const getMyReviews = catchAsync(async (req: Request, res: Response) => {
+	const tenantId = req.user?.id as string;
+	const reviews = await reviewServices.getMyReviews(tenantId);
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "Successfully get my reviews.",
+		data: reviews,
+	});
+});
+
 export const reviewControllers = {
 	addReview,
 	propertyReviews,
 	deleteReview,
 	updateReview,
+	getMyReviews,
 };
