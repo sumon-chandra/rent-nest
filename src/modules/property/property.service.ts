@@ -357,12 +357,50 @@ const getLandlordProperties = async (landlordId: string) => {
 		};
 	});
 
+	const recentBookings = await prisma.rentalRequest.findMany({
+		where: {
+			property: {
+				landlordId: landlordId,
+			},
+		},
+		orderBy: {
+			createdAt: "desc",
+		},
+		take: 5,
+		include: {
+			property: {
+				select: {
+					id: true,
+					title: true,
+					thumbnail: true,
+					location: true,
+					status: true,
+					price: true,
+				},
+			},
+			tenant: {
+				select: {
+					name: true,
+					email: true,
+					avatar: true,
+				},
+			},
+			payment: {
+				select: {
+					amount: true,
+					status: true,
+				},
+			},
+		},
+	});
+
 	return {
 		data: formattedProperties,
 		meta: {
 			totalRevenue,
 			activeProperties,
 			totalBookingsThisMonth,
+			recentBookings,
 		},
 	};
 };
