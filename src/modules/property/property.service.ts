@@ -389,6 +389,8 @@ const getLandlordProperties = async (landlordId: string) => {
 				select: {
 					amount: true,
 					status: true,
+					createdAt: true,
+					paidAt: true,
 				},
 			},
 		},
