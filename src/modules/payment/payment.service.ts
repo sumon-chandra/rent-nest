@@ -87,8 +87,7 @@ const handleStripeWebhook = async (payload: Buffer, signature: string) => {
 	}
 
 	const endpointSecret = envConfigs.stripe.webhook_secret;
-	const eventPayload = new Uint8Array(payload);
-	const event = stripe.webhooks.constructEvent(eventPayload, signature, endpointSecret);
+	const event = stripe.webhooks.constructEvent(payload as any, signature, endpointSecret);
 
 	switch (event.type) {
 		case "checkout.session.completed":

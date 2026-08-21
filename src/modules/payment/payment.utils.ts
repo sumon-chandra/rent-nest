@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { prisma } from "../../lib/prisma";
 import AppError from "../../utilities/app-error";
-import { PaymentStatus, RentalRequestStatus } from "../../../generated/prisma/enums";
+import { PaymentStatus, RentalRequestStatus, PropertyStatus } from "../../../generated/prisma/enums";
 
 const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
 	const paymentId = session.metadata?.paymentId;
@@ -13,6 +13,9 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
 	const payment = await prisma.payment.findUnique({
 		where: {
 			id: paymentId,
+		},
+		include: {
+			rentalRequest: true,
 		},
 	});
 
@@ -43,6 +46,15 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
 			},
 			data: {
 				status: RentalRequestStatus.COMPLETED,
+			},
+		});
+
+		await tx.property.update({
+			where: {
+				id: payment.rentalRequest.propertyId,
+			},
+			data: {
+				status: PropertyStatus.RENTED,
 			},
 		});
 	});
