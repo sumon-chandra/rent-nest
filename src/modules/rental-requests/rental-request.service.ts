@@ -127,6 +127,9 @@ const deleteRentalRequest = async (id: string) => {
 const getMyProperties = async (tenantId: string) => {
 	const rentalRequests = await prisma.rentalRequest.findMany({
 		where: { tenantId },
+		orderBy: {
+			createdAt: "desc"
+		},
 		include: {
 			property: {
 				include: {

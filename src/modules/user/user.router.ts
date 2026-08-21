@@ -6,7 +6,7 @@ import { usersControllers } from "./user.controller";
 const userRoute = Router();
 
 userRoute.get("/", auth(Role.ADMIN), usersControllers.getAllUsers);
-userRoute.get("/:userId", auth(Role.ADMIN), usersControllers.getUserById);
+userRoute.get("/:userId", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), usersControllers.getUserById);
 userRoute.get("/me", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), usersControllers.getProfile);
 userRoute.get("/me/tenant-stats", auth(Role.TENANT), usersControllers.getTenantStats);
 userRoute.patch("/update", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), usersControllers.updateProfile);
