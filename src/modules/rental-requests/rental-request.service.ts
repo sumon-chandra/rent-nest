@@ -65,6 +65,12 @@ const getAllRentalRequests = async (requestedUserRole: Role, userId: string) => 
 					status: true,
 				},
 			},
+			payment: {
+				select: {
+					status: true,
+					id: true,
+				},
+			},
 		},
 	});
 	return rentalRequests;
@@ -127,6 +133,12 @@ const getMyProperties = async (tenantId: string) => {
 					landlord: true,
 				},
 			},
+			payment: {
+				select: {
+					status: true,
+					id: true,
+				},
+			},
 		},
 	});
 
@@ -136,6 +148,8 @@ const getMyProperties = async (tenantId: string) => {
 		landlord: request.property.landlord.name,
 		dateApplied: request.createdAt.toISOString().split("T")[0],
 		status: request.status,
+		paymentStatus: request.payment ? request.payment.status : "PENDING",
+		paymentId: request.payment ? request.payment.id : null,
 		moveInDate: request.moveInDate.toISOString().split("T")[0],
 	}));
 };

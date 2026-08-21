@@ -64,10 +64,23 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+const getTenantStats = catchAsync(async (req: Request, res: Response) => {
+	const userId = req.user!.id;
+	const response = await usersServices.getTenantDashboardStats(userId);
+
+	sendResponse(res, {
+		success: true,
+		message: "Retrieved tenant dashboard stats",
+		statusCode: httpStatus.OK,
+		data: response,
+	});
+});
+
 export const usersControllers = {
 	getAllUsers,
 	getProfile,
 	deleteUser,
 	updateProfile,
 	getUserById,
+	getTenantStats,
 };

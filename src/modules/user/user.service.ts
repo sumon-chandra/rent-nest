@@ -1,5 +1,6 @@
 import { prisma } from "../../lib/prisma";
 import { UserDto } from "./user.interface";
+import { RentalRequestStatus, PaymentStatus } from "../../../generated/prisma/enums";
 
 const getMyProfileFromDB = async (userID: string) => {
 	const userData = await prisma.user.findUniqueOrThrow({
@@ -55,10 +56,76 @@ const deleteUser = async (userId: string) => {
 	});
 };
 
+const getTenantDashboardStats = async (tenantId: string) => {
+	const totalBooked = await prisma.rentalRequest.count({
+		where: {
+			tenantId,
+			status: { in: [RentalRequestStatus.APPROVED, RentalRequestStatus.COMPLETED] },
+		},
+	});
+
+	const totalPendingRequests = await prisma.rentalRequest.count({
+		where: {
+			tenantId,
+			status: RentalRequestStatus.PENDING,
+		},
+	});
+
+	const totalSavedProperties = await prisma.favoriteProperties.count({
+		where: { tenantId },
+	});
+
+	const payments = await prisma.payment.aggregate({
+		where: {
+			rentalRequest: { tenantId },
+			status: PaymentStatus.COMPLETED,
+		},
+		_sum: {
+			amount: true,
+		},
+	});
+	const totalInvestedAmount = Number(payments._sum.amount || 0);
+
+	const latestRentalRequests = await prisma.rentalRequest.findMany({
+		where: { tenantId },
+		orderBy: { createdAt: "desc" },
+		take: 5,
+		include: {
+			property: {
+				select: {
+					title: true,
+					price: true,
+					location: true,
+				},
+			},
+			payment: {
+				select: {
+					status: true,
+					id: true,
+				},
+			},
+		},
+	});
+
+	const formattedLatestRequests = latestRentalRequests.map((req) => ({
+		...req,
+		paymentStatus: req.payment ? req.payment.status : "PENDING",
+	}));
+
+	return {
+		totalBooked,
+		totalPendingRequests,
+		totalSavedProperties,
+		totalInvestedAmount,
+		latestRentalRequests: formattedLatestRequests,
+	};
+};
+
 export const usersServices = {
 	getMyProfileFromDB,
 	updateUserProfile,
 	getAllUsers,
 	deleteUser,
 	getUserById,
+	getTenantDashboardStats,
 };
