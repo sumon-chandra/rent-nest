@@ -27,7 +27,7 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
 		return;
 	}
 
-	await prisma.$transaction(async (tx) => {
+	const response = await prisma.$transaction(async (tx) => {
 		await tx.payment.update({
 			where: {
 				id: payment.id,
@@ -58,6 +58,8 @@ const handleCheckoutCompleted = async (session: Stripe.Checkout.Session) => {
 			},
 		});
 	});
+
+	return response;
 };
 
 const handleCheckoutExpired = async (session: Stripe.Checkout.Session) => {

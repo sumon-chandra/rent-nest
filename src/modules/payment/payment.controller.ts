@@ -18,10 +18,20 @@ const createCheckoutSession = catchAsync(async (req: Request, res: Response) => 
 });
 
 const stripeWebhook = catchAsync(async (req: Request, res: Response) => {
-	const event = req.body as Buffer;
+	const event = (req as any).rawBody || req.body;
 	const signature = req.headers["stripe-signature"] as string;
 
-	await paymentServices.handleStripeWebhook(event, signature);
+	console.log("--- Stripe Webhook Triggered ---");
+	console.log("Signature present:", !!signature);
+	console.log("Raw body present:", !!(req as any).rawBody);
+
+	try {
+		await paymentServices.handleStripeWebhook(event, signature);
+		console.log("Stripe webhook handled successfully.");
+	} catch (error: any) {
+		console.error("Stripe Webhook Error:", error.message);
+		throw error; // Re-throw to be caught by catchAsync
+	}
 
 	sendResponse(res, {
 		success: true,
