@@ -73,6 +73,7 @@ const handleStripeWebhook = async (payload: Buffer, signature: string) => {
 	}
 
 	const endpointSecret = envConfigs.stripe.webhook_secret;
+	console.log("Body type:", typeof payload, "Is Buffer:", Buffer.isBuffer(payload), "Length:", payload?.length);
 	const event = await stripe.webhooks.constructEventAsync(payload as any, signature, endpointSecret);
 	switch (event.type) {
 		case "checkout.session.completed":
