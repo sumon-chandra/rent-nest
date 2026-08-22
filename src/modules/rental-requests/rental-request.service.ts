@@ -35,7 +35,6 @@ const createRentalRequest = async (rentalRequestData: RentalRequestData) => {
 };
 
 const getAllRentalRequests = async (requestedUserRole: Role, userId: string) => {
-	console.log({ requestedUserRole, userId });
 	let where: RentalRequestWhereInput = {};
 	if (requestedUserRole === Role.LANDLORD) {
 		where = { property: { landlordId: userId } };
@@ -47,6 +46,9 @@ const getAllRentalRequests = async (requestedUserRole: Role, userId: string) => 
 
 	const rentalRequests = await prisma.rentalRequest.findMany({
 		where,
+		orderBy: {
+			createdAt: "desc",
+		},
 		include: {
 			tenant: {
 				select: {
