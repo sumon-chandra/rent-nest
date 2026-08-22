@@ -93,7 +93,34 @@ const handleStripeWebhook = async (payload: Buffer, signature: string) => {
 };
 
 const getAllPayments = async () => {
-	const response = await prisma.payment.findMany();
+	const response = await prisma.payment.findMany({
+		include: {
+			rentalRequest: {
+				include: {
+					tenant: {
+						select: {
+							id: true,
+							name: true,
+							email: true,
+						},
+					},
+					property: {
+						select: {
+							title: true,
+							location: true,
+							landlord: {
+								select: {
+									id: true,
+									name: true,
+									email: true,
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	});
 	if (!response) {
 		throw AppError.internal("Failed to retrieve payment list.");
 	}
