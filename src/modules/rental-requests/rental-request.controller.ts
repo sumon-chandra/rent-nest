@@ -20,13 +20,14 @@ const makeRentalRequest = catchAsync(async (req, res) => {
 const getAllRentalRequests = catchAsync(async (req, res) => {
 	const userRole = req.user?.role as Role;
 	const userId = req.user?.id as string;
-	const rentalRequests = await rentalRequestService.getAllRentalRequests(userRole, userId);
+	const result = await rentalRequestService.getAllRentalRequests(userRole, userId, req.query);
 
 	sendResponse(res, {
 		success: true,
 		statusCode: httpStatus.OK,
 		message: "Rental requests retrieved successfully",
-		data: rentalRequests,
+		meta: result.meta,
+		data: result.data,
 	});
 });
 

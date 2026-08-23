@@ -42,13 +42,14 @@ const updateProfile = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllUsers = catchAsync(async (req: Request, res: Response) => {
-	const response = await usersServices.getAllUsers();
+	const response = await usersServices.getAllUsers(req.query);
 
 	sendResponse(res, {
 		success: true,
 		message: "All users retrieved.",
 		statusCode: httpStatus.OK,
-		data: response,
+		meta: response.meta,
+		data: response.data,
 	});
 });
 

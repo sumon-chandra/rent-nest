@@ -30,16 +30,40 @@ const updateUserProfile = async (userID: string, profileData: UserDto) => {
 	return updatedUser;
 };
 
-const getAllUsers = async () => {
+const getAllUsers = async (query: Record<string, unknown>) => {
+	const { searchTerm, page = 1, limit = 10 } = query;
+	const skip = (Number(page) - 1) * Number(limit);
+	
+	const whereCondition: any = searchTerm
+		? {
+				OR: [
+					{ name: { contains: searchTerm as string, mode: "insensitive" } },
+					{ email: { contains: searchTerm as string, mode: "insensitive" } },
+				],
+		  }
+		: {};
+
 	const response = await prisma.user.findMany({
+		where: whereCondition,
+		skip,
+		take: Number(limit),
+		orderBy: { createdAt: "desc" },
 		omit: {
 			password: true,
-			createdAt: true,
 			updatedAt: true,
 		},
 	});
 
-	return response;
+	const total = await prisma.user.count({ where: whereCondition });
+
+	return {
+		meta: {
+			page: Number(page),
+			limit: Number(limit),
+			total,
+		},
+		data: response,
+	};
 };
 
 const getUserById = async (userId: string) => {

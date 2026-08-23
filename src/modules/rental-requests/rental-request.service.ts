@@ -34,7 +34,11 @@ const createRentalRequest = async (rentalRequestData: RentalRequestData) => {
 	return rentalRequest;
 };
 
-const getAllRentalRequests = async (requestedUserRole: Role, userId: string) => {
+const getAllRentalRequests = async (requestedUserRole: Role, userId: string, query: Record<string, unknown> = {}) => {
+	const page = query.page ? Number(query.page) : 1;
+	const limit = query.limit ? Number(query.limit) : 10;
+	const skip = (page - 1) * limit;
+
 	let where: RentalRequestWhereInput = {};
 	if (requestedUserRole === Role.LANDLORD) {
 		where = { property: { landlordId: userId } };
@@ -44,8 +48,18 @@ const getAllRentalRequests = async (requestedUserRole: Role, userId: string) => 
 		where = {};
 	}
 
+	if (query.searchTerm) {
+		// add search logic if needed, e.g. search by property title
+		where.property = {
+			...((where.property as any) || {}),
+			title: { contains: query.searchTerm as string, mode: "insensitive" },
+		};
+	}
+
 	const rentalRequests = await prisma.rentalRequest.findMany({
 		where,
+		skip,
+		take: limit,
 		orderBy: {
 			createdAt: "desc",
 		},
@@ -75,7 +89,17 @@ const getAllRentalRequests = async (requestedUserRole: Role, userId: string) => 
 			},
 		},
 	});
-	return rentalRequests;
+
+	const total = await prisma.rentalRequest.count({ where });
+
+	return {
+		meta: {
+			page,
+			limit,
+			total,
+		},
+		data: rentalRequests,
+	};
 };
 
 const getRentalRequestById = async (id: string) => {

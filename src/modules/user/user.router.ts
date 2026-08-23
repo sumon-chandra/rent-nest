@@ -2,6 +2,7 @@ import { Router } from "express";
 import { auth } from "../../middlewares/auth";
 import { Role } from "../../../generated/prisma/enums";
 import { usersControllers } from "./user.controller";
+import { adminControllers } from "../admin/admin.controller";
 
 const userRoute = Router();
 
@@ -11,5 +12,6 @@ userRoute.get("/me", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), usersControll
 userRoute.get("/me/tenant-stats", auth(Role.TENANT), usersControllers.getTenantStats);
 userRoute.patch("/update", auth(Role.ADMIN, Role.LANDLORD, Role.TENANT), usersControllers.updateProfile);
 userRoute.delete("/:userId", auth(Role.ADMIN), usersControllers.deleteUser);
+userRoute.patch("/:userId/status", auth(Role.ADMIN), adminControllers.changeUserStatus);
 
 export default userRoute;
