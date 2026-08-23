@@ -220,6 +220,24 @@ const updateProperty = async (id: string, dto: Partial<Property>): Promise<Prope
 	return updatedProperty;
 };
 
+const updatePropertyStatus = async (userId: string, payload: {id: string, status: PropertyStatus}) => {
+	const property = await prisma.property.findUnique({
+		where: { id: payload.id },
+	});
+	if (!property) {
+		throw AppError.notFound("Property not found.");
+	}
+	if (property.landlordId !== userId) {
+		throw AppError.forbidden("You are not authorized to update this property.");
+	}
+	const updatedProperty = await prisma.property.update({
+		where: { id: payload.id },
+		data: { status: payload.status },
+	});
+	return updatedProperty;
+	
+}
+
 const deleteProperty = async (id: string): Promise<Property> => {
 	const deletedProperty = await prisma.property.delete({
 		where: { id },
@@ -464,4 +482,5 @@ export const propertyService = {
 	addFavorite,
 	getFavoriteProperties,
 	removeFavorite,
+	updatePropertyStatus
 };

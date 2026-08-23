@@ -48,6 +48,19 @@ const updateProperty = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+const changePropertyStatus = catchAsync(async (req: Request, res: Response) => {
+	const payload = req.body;
+	const userId = req.user?.id as string
+	const property = await propertyService.updatePropertyStatus(userId, payload)
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "Property status updated successfully",
+		data: property,
+	});
+});
+
 const deleteProperty = catchAsync(async (req: Request, res: Response) => {
 	const property = await propertyService.deleteProperty(req.params.id);
 
@@ -127,6 +140,7 @@ export const propertyController = {
 	getAllProperties,
 	getPropertyById,
 	updateProperty,
+	changePropertyStatus,
 	deleteProperty,
 	getPropertyMetadata,
 	getLandlordProperties,
