@@ -6,6 +6,7 @@ import rentalReqRouter from "../modules/rental-requests/rental-request.route";
 import paymentRouter from "../modules/payment/payment.router";
 import reviewRouter from "../modules/review/review.router";
 import userRoute from "../modules/user/user.router";
+import adminRouter from "../modules/admin/admin.route";
 
 const mainRouter = Router();
 
@@ -37,6 +38,10 @@ const moduleRoutes = [
 	{
 		path: "/users",
 		route: userRoute,
+	},
+	{
+		path: "/admin",
+		route: adminRouter,
 	},
 ];
 
