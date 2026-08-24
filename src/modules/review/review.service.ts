@@ -73,6 +73,14 @@ const getMyReviews = async (tenantId: string) => {
 					title: true,
 					location: true,
 				}
+			},
+			tenant: {
+				select: {
+					id: true,
+					name: true,
+					avatar: true,
+					email: true
+				}
 			}
 		}
 	});
