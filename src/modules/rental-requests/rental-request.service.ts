@@ -75,6 +75,7 @@ const getAllRentalRequests = async (requestedUserRole: Role, userId: string, que
 			},
 			property: {
 				select: {
+					id: true,
 					title: true,
 					description: true,
 					price: true,
@@ -174,6 +175,7 @@ const getMyProperties = async (tenantId: string) => {
 	return rentalRequests.map((request) => ({
 		id: request.id,
 		property: request.property.title,
+		propertyId: request.propertyId,
 		landlord: request.property.landlord.name,
 		dateApplied: request.createdAt.toISOString().split("T")[0],
 		status: request.status,
