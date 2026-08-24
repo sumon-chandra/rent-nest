@@ -161,6 +161,14 @@ const getMyProperties = async (tenantId: string) => {
 			property: {
 				include: {
 					landlord: true,
+					reviews: {
+						where: {
+							tenantId,
+						},
+						select: {
+							id: true,
+						},
+					},
 				},
 			},
 			payment: {
@@ -182,6 +190,7 @@ const getMyProperties = async (tenantId: string) => {
 		paymentStatus: request.payment ? request.payment.status : "PENDING",
 		paymentId: request.payment ? request.payment.id : null,
 		moveInDate: request.moveInDate.toISOString().split("T")[0],
+		hasReviewed: request.property.reviews.length > 0,
 	}));
 };
 
