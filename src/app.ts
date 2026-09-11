@@ -9,6 +9,8 @@ app.use(cors({ origin: ["http://localhost:3000", "https://rent-opennest.vercel.a
 app.post("/api/v1/payments/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 
+console.log("Welcome to webhook")
+
 app.get("/", (req: Request, res: Response) => {
 	res.status(200).json({
 		success: true,
