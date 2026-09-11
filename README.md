@@ -1,4 +1,4 @@
-# RentNest API 🏠
+# RentNest Property Management System API 🏠
 
 **Find & List Rental Properties with Ease**
 
@@ -176,10 +176,10 @@ bun run dev
 
 ## Rental Requests
 
-| Method | Endpoint                                   | Description                               |
-| ------ | ------------------------------------------ | ----------------------------------------- |
-| POST   | `/rental-requests`                         | Submit rental request                     |
-| GET    | `/rental-requests`                         | Get current user's rental requests        |
+| Method | Endpoint                             | Description                               |
+| ------ | ------------------------------------ | ----------------------------------------- |
+| POST   | `/rental-requests`                   | Submit rental request                     |
+| GET    | `/rental-requests`                   | Get current user's rental requests        |
 | GET    | `/rental-requests/:id`               | Get rental request details                |
 | PATCH  | `/rental-requests/update-status/:id` | Approve, reject, or cancel rental request |
 | DELETE | `/rental-requests/:id`               | Delete rental request                     |
@@ -235,9 +235,9 @@ Example:
 
 ```json
 {
-	"success": false,
-	"message": "Property not found",
-	"errors": []
+  "success": false,
+  "message": "Property not found",
+  "errors": []
 }
 ```
 
@@ -247,10 +247,10 @@ Example:
 
 ```json
 {
-	"success": true,
-	"statusCode": 200,
-	"message": "Property created successfully",
-	"data": {}
+  "success": true,
+  "statusCode": 200,
+  "message": "Property created successfully",
+  "data": {}
 }
 ```
 
